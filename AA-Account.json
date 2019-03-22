@@ -1,45 +1,26 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0",
+    "contentVersion": "1.0.0.0",
     "parameters": {
         "accountName": {
             "type": "string",
-            "defaultValue": "AA-AzWeAutomation-DEV",
+            "defaultValue": "AA-AzWeAutomation-DEV"
         },
         "runbookName": {
             "type": "string",
             "defaultValue": "ARMTest"
-        },
-        "userName": {
-            "type": "string",
-            "metadata": {
-                "description": "The username for the Azure Automation credential."
-            }
-        },
-        "password": {
-            "type": "securestring",
-            "metadata": {
-                "description": "The password for the Azure Automation credential."
-            }
-        },
-        "jobId": {
-            "type": "string",
-            "metadata": {
-                "description": "The GUID for the runbook job to be started."
-            }
         }
     },
     "variables": {
-        "runbookName": "Get-AzureVMTutorial",
-        "scriptUri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-automation-runbook-getvms/Runbooks/Get-AzureVMTutorial.ps1",
-        "runbookDescription": "Authenticates to Azure and lists all the Azure V1 VMs",
+        "runbookScriptUri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/ARMTest.ps1",
+        "runbookDescription": "ARM test",
         "sku": "Free"
     },
     "resources": [
       {
         "name": "[parameters('accountName')]",
         "type": "Microsoft.Automation/automationAccounts",
-        "apiVersion": "2015-01-01-preview",
+        "apiVersion": "2015-10-31",
         "location": "[resourceGroup().location]",
         "dependsOn": [ ],
         "tags": { },
@@ -50,9 +31,9 @@
         },
         "resources": [
           {
-            "name": "[variables('runbookName')]",
+            "name": "[parameters('runbookName')]",
             "type": "runbooks",
-            "apiVersion": "2015-01-01-preview",
+            "apiVersion": "2015-10-31",
             "location": "[resourceGroup().location]",
             "dependsOn": [
               "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
@@ -64,40 +45,8 @@
               "logVerbose": false,
               "description": "[variables('runbookDescription')]",
               "publishContentLink": {
-                "uri": "[variables('scriptUri')]",
+                "uri": "[variables('runbookScriptUri')]",
                 "version": "1.0.0.0"
-              }
-            }
-          },
-          {
-            "name": "[parameters('credentialName')]",
-            "type": "credentials",
-            "apiVersion": "2015-01-01-preview",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
-            ],
-            "tags": { },
-            "properties": {
-              "userName": "[parameters('userName')]",
-              "password": "[parameters('password')]"
-            }
-          },
-          {
-            "name": "[parameters('jobId')]",
-            "type": "jobs",
-            "apiVersion": "2015-01-01-preview",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]",
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/',variables('runbookName'))]"
-            ],
-            "tags": {
-              "key": "value"
-            },
-            "properties": {
-              "runbook": {
-                "name": "[variables('runbookName')]"
               }
             }
           }
