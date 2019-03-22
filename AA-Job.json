@@ -32,7 +32,7 @@
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2015-01-01",
+            "apiVersion": "2018-05-01",
             "name": "AA-AccountTemplate",
             "properties": {
                 "mode": "Incremental",
