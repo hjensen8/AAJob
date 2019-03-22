@@ -1,57 +1,57 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "accountName": {
-            "type": "string",
-            "defaultValue": "AA-AzWeAutomation-DEV"
-        },
-        "runbookName": {
-            "type": "string",
-            "defaultValue": "ARMTest"
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "accountName": {
+      "type": "string",
+      "defaultValue": "AA-AzWeAutomation-DEV"
+    },
+    "runbookName": {
+      "type": "string",
+      "defaultValue": "ARMTest"
+    }
+  },
+  "variables": {
+    "runbookScriptUri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/ARMTest.ps1",
+    "runbookDescription": "ARM test",
+    "sku": "Free"
+  },
+  "resources": [
+    {
+      "name": "[parameters('accountName')]",
+      "type": "Microsoft.Automation/automationAccounts",
+      "apiVersion": "2015-10-31",
+      "location": "westeurope",
+      "dependsOn": [],
+      "tags": {},
+      "properties": {
+        "sku": {
+          "name": "[variables('sku')]"
         }
-    },
-    "variables": {
-        "runbookScriptUri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/ARMTest.ps1",
-        "runbookDescription": "ARM test",
-        "sku": "Free"
-    },
-    "resources": [
-      {
-        "name": "[parameters('accountName')]",
-        "type": "Microsoft.Automation/automationAccounts",
-        "apiVersion": "2015-10-31",
-        "location": "[resourceGroup().location]",
-        "dependsOn": [ ],
-        "tags": { },
-        "properties": {
-          "sku": {
-            "name": "[variables('sku')]"
-          }
-        },
-        "resources": [
-          {
-            "name": "[parameters('runbookName')]",
-            "type": "runbooks",
-            "apiVersion": "2015-10-31",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
-            ],
-            "tags": { },
-            "properties": {
-              "runbookType": "Script",
-              "logProgress": false,
-              "logVerbose": false,
-              "description": "[variables('runbookDescription')]",
-              "publishContentLink": {
-                "uri": "[variables('runbookScriptUri')]",
-                "version": "1.0.0.0"
-              }
+      },
+      "resources": [
+        {
+          "name": "[parameters('runbookName')]",
+          "type": "runbooks",
+          "apiVersion": "2015-10-31",
+          "location": "westeurope",
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+          ],
+          "tags": {},
+          "properties": {
+            "runbookType": "Script",
+            "logProgress": false,
+            "logVerbose": false,
+            "description": "[variables('runbookDescription')]",
+            "publishContentLink": {
+              "uri": "[variables('runbookScriptUri')]",
+              "version": "1.0.0.0"
             }
           }
-        ]
-      }
-    ],
-    "outputs": {}
+        }
+      ]
+    }
+  ],
+  "outputs": {}
 }
