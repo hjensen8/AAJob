@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "jobId": {
+            "defaultValue": "0d7812de-6584-42fd-8a95-d1edb8c3deac",
+            "type": "string"
+        },
+        "runbookName": {
+          "type": "string",
+          "defaultValue": "ARMTest"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('jobId')]",
+            "type": "Microsoft.Automation/automationAccounts/jobs",
+            "apiVersion": "2015-10-31",
+            "location": "westeurope",
+            "tags": {
+              "key": "value"
+            },
+            "properties": {
+              "runbook": {
+                "name": "[parameters('runbookName')]"
+              }
+            },
+            "dependsOn": [
+                "AA-AccountTemplate"
+            ]
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2015-01-01",
+            "name": "AA-AccountTemplate",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account.json",
+                    "contentVersion": "1.0.0.0"
+                }
+            }
+        }
+    ]
+}
