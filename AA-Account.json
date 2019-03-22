@@ -46,7 +46,7 @@
             "description": "[variables('runbookDescription')]",
             "publishContentLink": {
               "uri": "[variables('runbookScriptUri')]",
-              "version": "1.0.0.0"
+              "contentVersion": "1.0.0.0"
             }
           }
         }
