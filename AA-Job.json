@@ -14,7 +14,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[parameters('jobId')]",
+            "name": "[concat('AA-AzWeAutomation-DEV/ARMTest/', parameters('jobId'))]",
             "type": "Microsoft.Automation/automationAccounts/jobs",
             "apiVersion": "2015-10-31",
             "location": "westeurope",
@@ -39,16 +39,6 @@
                 "templateLink": {
                     "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account.json",
                     "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "accountName": {
-                        "type": "string",
-                        "defaultValue": "AA-AzWeAutomation-DEV"
-                    },
-                    "runbookName": {
-                        "type": "string",
-                        "defaultValue": "ARMTest"
-                    }
                 }
             }
         }
