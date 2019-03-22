@@ -14,7 +14,7 @@
     "variables": {},
     "resources": [
         {
-            "name": "[concat('AA-AzWeAutomation-DEV/ARMTest/', parameters('jobId'))]",
+            "name": "[concat('ARMTest/', parameters('jobId'))]",
             "type": "Microsoft.Automation/automationAccounts/jobs",
             "apiVersion": "2015-10-31",
             "location": "westeurope",
