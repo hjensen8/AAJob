@@ -7,8 +7,8 @@
             "type": "string"
         },
         "runbookName": {
-          "type": "string",
-          "defaultValue": "ARMTest"
+            "type": "string",
+            "defaultValue": "ARMTest"
         }
     },
     "variables": {},
@@ -19,12 +19,12 @@
             "apiVersion": "2015-10-31",
             "location": "westeurope",
             "tags": {
-              "key": "value"
+                "key": "value"
             },
             "properties": {
-              "runbook": {
-                "name": "[parameters('runbookName')]"
-              }
+                "runbook": {
+                    "name": "[parameters('runbookName')]"
+                }
             },
             "dependsOn": [
                 "AA-AccountTemplate"
@@ -39,6 +39,16 @@
                 "templateLink": {
                     "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account.json",
                     "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "accountName": {
+                        "type": "string",
+                        "defaultValue": "AA-AzWeAutomation-DEV"
+                    },
+                    "runbookName": {
+                        "type": "string",
+                        "defaultValue": "ARMTest"
+                    }
                 }
             }
         }
