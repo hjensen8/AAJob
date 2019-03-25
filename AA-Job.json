@@ -46,12 +46,11 @@
                         }
                     ]
                 },
-                "parameters": {},
-                "dependsOn": [
-                    "AccountAndRunbook"
-                ]
-
-            }
+                "parameters": {}
+            },
+            "dependsOn": [
+                "AccountAndRunbook"
+            ]
         },
         {
             "type": "Microsoft.Resources/deployments",
