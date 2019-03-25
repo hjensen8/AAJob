@@ -1,0 +1,112 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "param1":{
+            "type": "string",
+            "defaultValue": "conf123"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "nic1",
+            "resourceGroup": "rg-azdevnictest",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "param2":{
+                            "type": "string",
+                            "defaultValue": "conf124"
+                        }
+                    },
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/networkInterfaces",
+                            "name": "nic1",
+                            "apiVersion": "2018-12-01",
+                            "location": "westeurope",
+                            "tags": {},
+                            "properties": {
+                                "ipConfigurations": [
+                                    {
+                                        "name": "[parameters('IpconfigName')]",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "/subscriptions/2b9399db-31e4-4bd1-aa44-dce5e906cb98/resourceGroups/RG-AzWe_SimOne/providers/Microsoft.Network/virtualNetworks/vNet-AzWeSimOne01/subnets/SimOneTenant"
+                                            },
+                                            "primary": true,
+                                            "privateIPAddressVersion": "IPv4"
+                                        }
+                                    }
+                                ],
+                                "enableAcceleratedNetworking": false,
+                                "enableIPForwarding": false,
+                                "primary": true,
+                                "tapConfigurations": []
+                            },
+                            "parameters": {
+                               "IpconfigName":{"value": "asdf"}
+                             }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "nic2",
+            "resourceGroup": "rg-azdevnictest",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/networkInterfaces",
+                            "name": "nic2",
+                            "apiVersion": "2018-12-01",
+                            "location": "westeurope",
+                            "tags": {},
+                            "properties": {
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "properties": {
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "subnet": {
+                                                "id": "/subscriptions/2b9399db-31e4-4bd1-aa44-dce5e906cb98/resourceGroups/RG-AzWe_SimOne/providers/Microsoft.Network/virtualNetworks/vNet-AzWeSimOne01/subnets/SimOneTenant"
+                                            },
+                                            "primary": true,
+                                            "privateIPAddressVersion": "IPv4"
+                                        }
+                                    }
+                                ],
+                                "enableAcceleratedNetworking": false,
+                                "enableIPForwarding": false,
+                                "primary": true,
+                                "tapConfigurations": []
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+
+    ]
+}

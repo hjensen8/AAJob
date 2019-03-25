@@ -4,17 +4,14 @@
   "parameters": {
     "accountName": {
       "type": "string",
-      "defaultValue": "AA-AzWeAutomation-DEV"
+      "defaultValue": "ARM-Account"
     },
     "runbookName": {
       "type": "string",
-      "defaultValue": "ARMTest"
+      "defaultValue": "ARM-Runbook"
     }
   },
   "variables": {
-    "runbookScriptUri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/ARMTest.ps1",
-    "runbookDescription": "ARM test",
-    "sku": "Free"
   },
   "resources": [
     {
@@ -26,7 +23,7 @@
       "tags": {},
       "properties": {
         "sku": {
-          "name": "[variables('sku')]"
+          "name": "Free"
         }
       },
       "resources": [
@@ -43,15 +40,14 @@
             "runbookType": "Script",
             "logProgress": false,
             "logVerbose": false,
-            "description": "[variables('runbookDescription')]",
+            "description": "Test runbook",
             "publishContentLink": {
-              "uri": "[variables('runbookScriptUri')]",
+              "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/ARMTest.ps1",
               "contentVersion": "1.0.0.0"
             }
           }
         }
       ]
     }
-  ],
-  "outputs": {}
+  ]
 }

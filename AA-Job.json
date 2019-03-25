@@ -13,6 +13,11 @@
     },
     "variables": {},
     "resources": [
+
+
+
+
+
         {
             "name": "[concat('ARMTest/', parameters('jobId'))]",
             "type": "Microsoft.Automation/automationAccounts/jobs",
