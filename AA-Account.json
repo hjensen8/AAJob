@@ -9,6 +9,10 @@
     "runbookName": {
       "type": "string",
       "defaultValue": "ARM-Runbook"
+    },
+    "jobId": {
+      "type": "string",
+      "defaultValue": "8387f5c4-02a7-4531-9517-fff35577f368"
     }
   },
   "variables": {
@@ -48,6 +52,24 @@
           }
         }
       ]
+    },
+    {
+      "name": "[parameters('jobId')]",
+      "type": "jobs",
+      "apiVersion": "2015-01-01-preview",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]",
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/',parameters('runbookName'))]"
+      ],
+      "tags": {
+        "key": "value"
+      },
+      "properties": {
+        "runbook": {
+          "name": "[parameters('runbookName')]"
+        }
+      }
     }
   ]
 }
