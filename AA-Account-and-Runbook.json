@@ -22,7 +22,6 @@
       "name": "[parameters('accountName')]",
       "type": "Microsoft.Automation/automationAccounts",
       "apiVersion": "2015-10-31",
-      "location": "westeurope",
       "dependsOn": [],
       "tags": {},
       "properties": {
@@ -35,7 +34,6 @@
           "name": "[parameters('runbookName')]",
           "type": "runbooks",
           "apiVersion": "2015-10-31",
-          "location": "westeurope",
           "dependsOn": [
             "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
           ],
