@@ -2,50 +2,39 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "jobId": {
-            "defaultValue": "0d7812de-6584-42fd-8a95-d1edb8c3deac",
-            "type": "string"
-        },
-        "runbookName": {
+        "accountName": {
             "type": "string",
-            "defaultValue": "ARMTest"
-        }
+            "defaultValue": "ARM-Account"
+          },
+          "runbookName": {
+            "type": "string",
+            "defaultValue": "ARM-Runbook"
+          },
+          "jobId": {
+            "type": "string",
+            "defaultValue": "8387f5c4-02a7-4531-9517-fff35577f368"
+          }
     },
     "variables": {},
     "resources": [
-
-
-
-
-
-        {
-            "name": "[concat('ARMTest/', parameters('jobId'))]",
-            "type": "Microsoft.Automation/automationAccounts/jobs",
-            "apiVersion": "2015-10-31",
-            "location": "westeurope",
-            "tags": {
-                "key": "value"
-            },
-            "properties": {
-                "runbook": {
-                    "name": "[parameters('runbookName')]"
-                }
-            },
-            "dependsOn": [
-                "AA-AccountTemplate"
-            ]
-        },
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
-            "name": "AA-AccountTemplate",
-            "location": "westeurope",
+            "name": "Account and Runbook",
+            "resourceGroup": "ARM-TEST",
+            "dependsOn": [
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account.json",
-                    "contentVersion": "1.0.0.0"
-                }
+                    "uri":"https://mystorageaccount.blob.core.windows.net/AzureTemplates/newStorageAccount.json",
+                    "contentVersion":"1.0.0.0"
+                 },
+                 "parameters": {
+                    "StorageAccountName":{"value": "[parameters('StorageAccountName')]"}
+                  }
+               }
+
             }
         }
     ]

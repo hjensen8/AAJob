@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "accountName": {
+      "type": "string",
+      "defaultValue": "ARM-Account"
+    },
+    "runbookName": {
+      "type": "string",
+      "defaultValue": "ARM-Runbook"
+    },
+    "jobId": {
+      "type": "string",
+      "defaultValue": "8387f5c4-02a7-4531-9517-fff35577f368"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "name": "[parameters('accountName')]",
+      "type": "Microsoft.Automation/automationAccounts",
+      "apiVersion": "2015-10-31",
+      "location": "westeurope",
+      "dependsOn": [],
+      "tags": {},
+      "properties": {
+        "sku": {
+          "name": "Free"
+        }
+      },
+      "resources": [
+        {
+          "name": "[parameters('runbookName')]",
+          "type": "runbooks",
+          "apiVersion": "2015-10-31",
+          "location": "westeurope",
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
+          ],
+          "tags": {},
+          "properties": {
+            "runbookType": "Script",
+            "logProgress": false,
+            "logVerbose": false,
+            "description": "Test runbook",
+            "publishContentLink": {
+              "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/ARMTest.ps1",
+              "contentVersion": "1.0.0.0"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
