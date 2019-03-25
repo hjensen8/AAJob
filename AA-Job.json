@@ -12,7 +12,7 @@
         },
         "jobId": {
             "type": "string",
-            "defaultValue": "6a8059adfadfasdf"
+            "defaultValue": "[newGuid()]"
         }
     },
     "variables": {},
