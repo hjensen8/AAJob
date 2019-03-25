@@ -35,7 +35,27 @@
                     "runbookName": {
                         "value": "[parameters('runbookName')]"
                     }
-                }
+                },
+                "resources": [
+                    {
+                        "name": "[parameters('jobId')]",
+                        "type": "jobs",
+                        "apiVersion": "2015-01-01-preview",
+                        "location": "[resourceGroup().location]",
+                        "dependsOn": [
+                            "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]",
+                            "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/',parameters('runbookName'))]"
+                        ],
+                        "tags": {
+                            "key": "value"
+                        },
+                        "properties": {
+                            "runbook": {
+                                "name": "[parameters('runbookName')]"
+                            }
+                        }
+                    }
+                ]
             }
         }
     ]
