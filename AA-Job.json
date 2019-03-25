@@ -5,15 +5,15 @@
         "accountName": {
             "type": "string",
             "defaultValue": "ARM-Account"
-          },
-          "runbookName": {
+        },
+        "runbookName": {
             "type": "string",
             "defaultValue": "ARM-Runbook"
-          },
-          "jobId": {
+        },
+        "jobId": {
             "type": "string",
             "defaultValue": "8387f5c4-02a7-4531-9517-fff35577f368"
-          }
+        }
     },
     "variables": {},
     "resources": [
@@ -22,19 +22,20 @@
             "apiVersion": "2018-05-01",
             "name": "Account and Runbook",
             "resourceGroup": "ARM-TEST",
-            "dependsOn": [
-            ],
+            "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri":"https://mystorageaccount.blob.core.windows.net/AzureTemplates/newStorageAccount.json",
-                    "contentVersion":"1.0.0.0"
-                 },
-                 "parameters": {
-                    "StorageAccountName":{"value": "[parameters('StorageAccountName')]"}
-                  }
-               }
-
+                    "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account-and-Runbook.json"
+                },
+                "parameters": {
+                    "accountName": {
+                        "value": "[parameters('accountName')]"
+                    },
+                    "runbookName": {
+                        "value": "[parameters('runbookName')]"
+                    }
+                }
             }
         }
     ]
