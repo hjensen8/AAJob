@@ -19,7 +19,7 @@
     "resources": [
         {
             "apiVersion": "2017-05-10",
-            "name": "Account-and-Runbook",
+            "name": "ExecuteJob",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "ARM-TEST",
             "properties": {
@@ -46,7 +46,32 @@
                         }
                     ]
                 },
-                "parameters": {}
+                "parameters": {},
+                "dependsOn": [
+                    "AccountAndRunbook"
+                ]
+
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "AccountAndRunbook",
+            "resourceGroup": "ARM-TEST",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account-and-Runbook.json"
+                },
+                "parameters": {
+                    "accountName": {
+                        "value": "[parameters('accountName')]"
+                    },
+                    "runbookName": {
+                        "value": "[parameters('runbookName')]"
+                    }
+                }
             }
         }
     ]
