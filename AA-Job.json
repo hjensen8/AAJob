@@ -18,42 +18,35 @@
     "variables": {},
     "resources": [
         {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "2017-05-10",
             "name": "Account-and-Runbook",
+            "type": "Microsoft.Resources/deployments",
             "resourceGroup": "ARM-TEST",
-            "dependsOn": [],
             "properties": {
                 "mode": "Incremental",
-                "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/hjensen8/AAJob/master/AA-Account-and-Runbook.json"
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "name": "[concat(parameters('accountName'), '/', parameters('jobId'))]",
+                            "type": "Microsoft.Automation/automationAccounts/jobs",
+                            "apiVersion": "2017-05-15-preview",
+                            "properties": {
+                                "runbook": {
+                                    "name": "[parameters('runbookName')]"
+                                },
+                                "parameters": {},
+                                "dependsOn": [
+                                    "[resourceId('Microsoft.Automation/automationAccounts', parameters('accountName'))]"
+                                ]
+                            }
+                        }
+                    ]
                 },
-                "parameters": {
-                    "accountName": {
-                        "value": "[parameters('accountName')]"
-                    },
-                    "runbookName": {
-                        "value": "[parameters('runbookName')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[parameters('jobId')]",
-            "type": "jobs",
-            "apiVersion": "2015-01-01-preview",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]",
-                "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/',parameters('runbookName'))]"
-            ],
-            "tags": {
-                "key": "value"
-            },
-            "properties": {
-                "runbook": {
-                    "name": "[parameters('runbookName')]"
-                }
+                "parameters": {}
             }
         }
     ]
